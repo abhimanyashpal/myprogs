@@ -211,5 +211,5 @@ int main (int argc, char **argv)
 
   sim_corruption (&test_buf[0], 16);
   dump_stream(test_buf,98);
-  printf("\nChecksum valid : %s \n",calc_checksum(test_buf,98) ? "Yes" : "No")
+  printf("\nChecksum valid : %s \n",calc_checksum(test_buf,98) ? "Yes" : "No");
 }

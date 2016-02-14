@@ -1,3 +1,6 @@
+/*
+ * Simple programe to generate a 16-bit checksum on a data pattern
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +12,8 @@ typedef unsigned char boolean;
 #define TAIL_ROOM 8
 #define TRUE 1
 #define FALSE 0
+
+#define TEST_BUF 1
 
 u_int8_t test_buf[] = {
 0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00, 
@@ -25,13 +30,23 @@ u_int8_t test_buf[] = {
 0x00,0x00,0x00,0x00,0x66,0x00,0x01,0x01,        
 0xa8,0xd0};
 
+/*
+ * API to simulate corruption starting from an offset
+ * with the pattern
+ */
 static
-void sim_corruption (u_int8_t *buf, u_int32_t offset)
+void sim_corruption (u_int8_t *buf, u_int32_t len,  u_int32_t offset)
 {
     int i = 0;
-    //Do some error checking later
+    u_int8_t *new = NULL;
 
-    u_int8_t *new = buf + offset;
+    if (((unsigned long long) buf + offset) > 
+        ((unsigned long long)buf + len - 64)) {
+         printf("\nOffset is out of range, unable to simulate corruption\n");
+         return;
+    }
+
+    new = buf + offset;
 
     while (i < 64) {
       *new = 0xff;
@@ -40,6 +55,9 @@ void sim_corruption (u_int8_t *buf, u_int32_t offset)
     }
 }
 
+/*
+ * API responsible for calculating checksum on a data stream
+ */
 static boolean
 calc_checksum (u_int8_t *buf, u_int32_t buf_len)
 {
@@ -101,6 +119,10 @@ fill_checksum (u_int8_t *buf, u_int32_t buf_len)
 
 }
 
+/*
+ * API to generate a data stream, we are using a mod3 pattern
+ * for now
+ */
 static u_int8_t *
 generate_stream (unsigned int buf_len)
 {
@@ -129,6 +151,9 @@ generate_stream (unsigned int buf_len)
     return buf;
 }
 
+/*
+ * Dump the stream
+ */
 static void
 dump_stream (uint8_t *buf, int len)
 {
@@ -205,11 +230,13 @@ int main (int argc, char **argv)
 
   printf("\nChecksum valid : %s \n",calc_checksum(buf,new_len) ? "Yes" : "No");
 
+#ifdef TEST_BUF
   new_len = fill_checksum(test_buf, 96);
   dump_stream(test_buf,98);
   printf("\nChecksum valid : %s \n",calc_checksum(test_buf,98) ? "Yes" : "No");
 
-  sim_corruption (&test_buf[0], 16);
+  sim_corruption (&test_buf[0], 98, 60);
   dump_stream(test_buf,98);
   printf("\nChecksum valid : %s \n",calc_checksum(test_buf,98) ? "Yes" : "No");
+#endif
 }

@@ -40,7 +40,7 @@ segregate_pos (int arr[], int n)
 
 int main (int argc, char **argv)
 {
-   int arr[] = {2, 3, 7, 6, 8, -1, -10, 15};
+   int arr[] = {5, 9 , 7, 4, 3, 11, 2}
    int n = sizeof(arr)/sizeof(arr[0]);
 
    segregate_pos(arr, n);

@@ -35,7 +35,7 @@ int main (int argc, char **argv)
    scanf("%d",&rot);
 
    if (rot >= num) {
-       rot = rot - num;
+       rot = rot % num;
    }
 
    if (!rot) 

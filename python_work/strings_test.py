@@ -54,6 +54,7 @@ print s1[0:]
 #Extended splice operator , in this we are working backwards in step of 1
 print s1[::-1]
 
+#Reverses the string 
 s3 = s1[::-1]
 
 s4 = "Hello my name is Abhiman!"
@@ -76,4 +77,22 @@ for x in l:
 
 
 print s5[::-1]
+
+
+#Converts a character to ascii value
+print ord('a')
+
+#converts ascii value to character
+print chr(97)
+
+
+#Covert string to uppercase
+s = "abcd"
+s = s.upper()
+
+print s
+
+i = 2
+s = "abcd"
+print s[i:i+1]
 

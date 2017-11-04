@@ -35,7 +35,10 @@ def wordbreak(s, words, index):
            print s[j:i+1]
            if s[j:i+1] in words:
              print "Found " + s[j:i+1]
-             return wordbreak(s,words,i+1)
+             ret_val = wordbreak(s,words,i+1)
+             if ret_val is True:
+               return ret_val
+
            j += 1
        i += 1
 

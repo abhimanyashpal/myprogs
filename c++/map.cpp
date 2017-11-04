@@ -83,7 +83,7 @@ long_uniq_sub (string &s)
 
 
 		if (m[s[end]] > start) {
-			start = m[s[end]];
+			start = m[s[end]]; //start is updated only here
 
 			//Update with the next position to start from
 			m[s[end]] = end+1;

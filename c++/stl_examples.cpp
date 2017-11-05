@@ -7,6 +7,115 @@
 
 using namespace std;
 
+class Compare {
+public:
+    bool operator () (int x, int y)
+    {
+       cout << "X :: " << x << "Y :: " << y << endl;
+       return (x > y); // does a greater-than operation and implements min-heap
+    }
+};
+
+//To create a more generic comparator which can decide min or max heap
+class Compare2 {
+    bool min_heap;
+public:
+    Compare2()
+    {
+       min_heap = 0;
+    }
+    Compare2(bool t)
+    {
+       min_heap = t;
+    }
+    bool operator () (int x, int y)
+    {
+        if (min_heap) {
+            return (x > y); //Equivalent to "greater-than" in the STL
+        } else {
+            return (x < y);
+        }
+    }
+};
+
+void priority_queue_test (void)
+{
+    priority_queue<int> mypq; //is basically a max-heap
+    //If we want a min-heap then we need to use the keyword "greater"
+    priority_queue<int , vector<int> , greater<int> > min_pq;
+
+    priority_queue<int, vector<int>, Compare> cust_pq;
+    typedef priority_queue<int , vector<int>, Compare2> cust2_pq_type;
+ 
+    cust2_pq_type cust2_pq(Compare2(true));
+    //cust2_pq_type cust3_pq(Compare2(false));
+    cust2_pq_type cust3_pq;
+
+    mypq.push(30);
+    mypq.push(100);
+    mypq.push(25);
+    mypq.push(40);
+
+    cout << mypq.top() << endl; // The root of the tree or top of heap
+
+    mypq.push(400);
+    cout << mypq.top() << endl; // The root of the tree or top of heap
+
+    cout << "SIZE :: " << mypq.size() << endl;
+
+    mypq.pop();
+    cout << "After doing a pop :: " << mypq.top() << endl; // The root of the tree or top of heap
+    
+    min_pq.push(30);
+    min_pq.push(100);
+    min_pq.push(25);
+    min_pq.push(40);
+
+    cout <<"MIN-HEAP" << endl;
+    cout << "Top:: " << min_pq.top() << endl;
+    min_pq.push(10);
+    cout << "Top:: " << min_pq.top() << endl;
+    min_pq.pop();
+    cout << "After a pop , Top:: " << min_pq.top() << endl;
+
+    min_pq.push(10);
+    cout << "sz :: " << min_pq.size() << endl;
+    min_pq.push(10);
+    cout << "sz :: " << min_pq.size() << endl;
+
+    //Customer comparator
+    cust_pq.push(30);
+    cust_pq.push(100);
+    cust_pq.push(25);
+    cust_pq.push(40);
+
+    cout << "CUSTOM queue::" << endl;
+    cout << cust_pq.top() << endl;
+
+    cust2_pq.push(30);
+    cust2_pq.push(100);
+    cust2_pq.push(25);
+    cust2_pq.push(40);
+    cout << "CUSTOM-2 queue::" << endl;
+    cout << cust2_pq.top() << endl;
+
+    cust3_pq.push(30);
+    cust3_pq.push(100);
+    cust3_pq.push(25);
+    cust3_pq.push(40);
+    cust3_pq.push(100);
+    cust3_pq.push(100);
+    cust3_pq.push(100);
+    cout << "CUSTOM-3 queue::" << endl;
+    cout << cust3_pq.top() << endl;
+
+    while (!cust3_pq.empty())
+    {
+        cout << cust3_pq.top() << endl;
+        cust3_pq.pop();
+    }
+
+}
 void vector_test (void)
 {
    string str[] = {"abc","efg","hij","lmn"};
@@ -167,5 +276,6 @@ int main (void)
     //vector_test();
     //queue_test();
     //map_test();
-    unordered_set_test();
+    //unordered_set_test();
+    priority_queue_test();
 }

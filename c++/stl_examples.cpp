@@ -123,7 +123,9 @@ void vector_test (void)
    int num_elems = sizeof(str)/sizeof(str[0]);
    vector<string>::iterator iter; 
    vector<string>::iterator fiter; 
+   vector<int> v1(3,0); //creating fixed length vector
 
+   cout << "Size::" << v1.size() << endl; 
    //Populate the vector
    i = 0;
    while (i < num_elems) {
@@ -273,9 +275,9 @@ void unordered_set_test (void)
 
 int main (void)
 {
-    //vector_test();
+    vector_test();
     //queue_test();
     //map_test();
     //unordered_set_test();
-    priority_queue_test();
+    //priority_queue_test();
 }

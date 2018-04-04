@@ -1,0 +1,30 @@
+iperf3   -c 193.168.1.2 -b 600M -t 20 -w 1M  -R -V
+
+
+iperf3  -u -c 193.168.1.2 -l 64 -t 20 -b 10M -R  (64 bytes,  -R is for server to send, client to receive)
+iperf3  -u -c 193.168.1.2 -l 1440 -t 20 -b 150M -R  (1440 bytes)
+iperf3  -u -c 128.0.0.1 -l 64 -t 20 -b 1000M -R  (1440 bytes)
+
+Generate perf data
+==================
+perf record -F 99 -p 10098 -g -- sleep 60
+perf script > out.perf
+
+Transfer to local machine
+
+./stackcollapse-perf.pl /Users/abhiman/Desktop/out.perf > out.folded
+
+./flamegraph.pl out.folded > output.svg
+
+
+perf stat -e task-clock,cycles,instructions,cache-references,cache-misses /var/tmp/a.out
+
+
+cache-references,cache-misses /var/tmp/a.out
+
+cache-references,cache-misses /var/tmp/a.out
+
+dtrace -n 'fbt::virtqueue_notify:entry {stack();}
+
+dtrace -n 'fbt::vtpci_notify_virtqueue:return {stack();printf("%u\n",timestamp);}''
+

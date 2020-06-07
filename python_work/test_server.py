@@ -24,7 +24,8 @@ def wait_for_data(conn):
 
 
 
-TCP_IP='10.54.10.55'
+#TCP_IP='10.54.10.55'
+TCP_IP='127.0.0.1'
 TCP_PORT = 5005
 BUFFER_SIZE = 20
 
